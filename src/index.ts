@@ -1,10 +1,12 @@
-import { Context, template, isInteger, segment, s } from 'koishi'
-
-import puppeteer from 'puppeteer';
+import { Context, template, isInteger, segment} from 'koishi'
 
 const decrypt = require('./decrypt.js')
 
 export const name = 'douban'
+
+export const using = ['puppeteer'] as const
+ 
+
 
 const URL_BASE = (path: string) => `https://search.douban.com/${path}/subject_search?search_text=`
 const URL_SEARCH_BOOK = URL_BASE('book')
@@ -86,13 +88,11 @@ export function apply(ctx: Context) {
         }
       }
       if (options.film) {
-        const browser = await puppeteer.launch();
-        const page = await browser.newPage();
+        // @ts-ignore
+        const page = await ctx.puppeteer.page();
         await page.goto(URL_MOVIE_CARD(data[index].id));
         const pic = await page.screenshot({ clip: { x: 10, y: 10, height: 325, width: 750 } })
         return segment.image(pic)
       }
     })
 }
-
-

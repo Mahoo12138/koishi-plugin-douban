@@ -1,7 +1,7 @@
 {
   "name": "koishi-plugin-douban",
   "description": "A koishi plugin crawling data from Web Douban",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
   "files": [
@@ -27,8 +27,5 @@
   "homepage": "https://github.com/Mahoo12138/koishi-plugin-douban",
   "peerDependencies": {
     "koishi": "^4.6.0"
-  },
-  "dependencies": {
-    "puppeteer": "^13.6.0"
   }
 }
