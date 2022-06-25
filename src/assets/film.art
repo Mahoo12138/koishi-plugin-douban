@@ -1,0 +1,961 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="renderer" content="webkit">
+  <meta name="referrer" content="always">
+  <link href="https://img3.doubanio.com/f/shire/204847ecc7d679de915c283531d14f16cfbee65e/css/douban.css"
+    rel="stylesheet" type="text/css">
+  <style>
+    .bigstar50,
+    .bigstar45,
+    .bigstar40,
+    .bigstar35,
+    .bigstar30,
+    .bigstar25,
+    .bigstar20,
+    .bigstar15,
+    .bigstar10,
+    .bigstar05,
+    .bigstar00 {
+      display: inline-block;
+      *display: inline;
+      zoom: 1;
+      background: url(https://img3.doubanio.com/f/movie/680a4bc4c384199245b080c7104da5be8ed717d3/pics/rating_icons/ic_rating_m.png) no-repeat;
+      background: -webkit-image-set(url(https://img3.doubanio.com/f/movie/680a4bc4c384199245b080c7104da5be8ed717d3/pics/rating_icons/ic_rating_m.png) 1x, url(https://img3.doubanio.com/f/movie/ee7f53d76c3f8ed4991bdbafdb9b2c90c0aedfef/pics/rating_icons/ic_rating_m@2x.png) 2x) no-repeat;
+      width: 75px;
+      height: 15px;
+      margin: 1px 0 0 0;
+      overflow: hidden
+    }
+
+    .bigstar50+span.rating_num,
+    .bigstar45+span.rating_num,
+    .bigstar40+span.rating_num,
+    .bigstar35+span.rating_num,
+    .bigstar30+span.rating_num,
+    .bigstar25+span.rating_num,
+    .bigstar20+span.rating_num,
+    .bigstar15+span.rating_num,
+    .bigstar10+span.rating_num,
+    .bigstar05+span.rating_num,
+    .bigstar00+span.rating_num {
+      font-size: 16px;
+      line-height: 1
+    }
+
+    .bigstar50 {
+      background-position: 0 0px
+    }
+
+    .bigstar45 {
+      background-position: 0 -15px
+    }
+
+    .bigstar40 {
+      background-position: 0 -30px
+    }
+
+    .bigstar35 {
+      background-position: 0 -45px
+    }
+
+    .bigstar30 {
+      background-position: 0 -60px
+    }
+
+    .bigstar25 {
+      background-position: 0 -75px
+    }
+
+    .bigstar20 {
+      background-position: 0 -90px
+    }
+
+    .bigstar15 {
+      background-position: 0 -105px
+    }
+
+    .bigstar10 {
+      background-position: 0 -120px
+    }
+
+    .bigstar05 {
+      background-position: 0 -135px
+    }
+
+    .bigstar00 {
+      background-position: 0 -150px
+    }
+
+    .allstar50,
+    .allstar45,
+    .allstar40,
+    .allstar35,
+    .allstar30,
+    .allstar25,
+    .allstar20,
+    .allstar15,
+    .allstar10,
+    .allstar05,
+    .allstar00,
+    .rating1-t,
+    .rating15-t,
+    .rating2-t,
+    .rating25-t,
+    .rating3-t,
+    .rating35-t,
+    .rating4-t,
+    .rating45-t,
+    .rating5-t,
+    .rating-t,
+    .starb~.stars5,
+    .starb~.stars4,
+    .starb~.stars3,
+    .starb~.stars2,
+    .starb~.stars1,
+    .collectors .stars5,
+    .collectors .stars4,
+    .collectors .stars3,
+    .collectors .stars2,
+    .collectors .stars1 {
+      display: inline-block;
+      *display: inline;
+      zoom: 1;
+      background: url(https://img3.doubanio.com/f/movie/b8f4c3672ef81106701071831e22422a745d3b74/pics/rating_icons/ic_rating_s.png) no-repeat;
+      background: -webkit-image-set(url(https://img3.doubanio.com/f/movie/b8f4c3672ef81106701071831e22422a745d3b74/pics/rating_icons/ic_rating_s.png) 1x, url(https://img3.doubanio.com/f/movie/0147ca9efddcac80050854590d26bee587b008df/pics/rating_icons/ic_rating_s@2x.png) 2x) no-repeat;
+      width: 55px;
+      height: 11px;
+      margin: 0 3px 0 0;
+      overflow: hidden
+    }
+
+    .status-item .allstar50,
+    .status-item .allstar45,
+    .status-item .allstar40,
+    .status-item .allstar35,
+    .status-item .allstar30,
+    .status-item .allstar25,
+    .status-item .allstar20,
+    .status-item .allstar15,
+    .status-item .allstar10,
+    .status-item .allstar05,
+    .status-item .allstar00,
+    .status-item .rating1-t,
+    .status-item .rating15-t,
+    .status-item .rating2-t,
+    .status-item .rating25-t,
+    .status-item .rating3-t,
+    .status-item .rating35-t,
+    .status-item .rating4-t,
+    .status-item .rating45-t,
+    .status-item .rating5-t,
+    .status-item .rating-t,
+    .status-item .starb~.stars5,
+    .status-item .starb~.stars4,
+    .status-item .starb~.stars3,
+    .status-item .starb~.stars2,
+    .status-item .starb~.stars1,
+    .status-item .collectors .stars5,
+    .status-item .collectors .stars4,
+    .status-item .collectors .stars3,
+    .status-item .collectors .stars2,
+    .status-item .collectors .stars1 {
+      margin: 0 0 0 4px
+    }
+
+    .allstar50 {
+      background-position: 0 0px
+    }
+
+    .allstar45 {
+      background-position: 0 -11px
+    }
+
+    .allstar40 {
+      background-position: 0 -22px
+    }
+
+    .allstar35 {
+      background-position: 0 -33px
+    }
+
+    .allstar30 {
+      background-position: 0 -44px
+    }
+
+    .allstar25 {
+      background-position: 0 -55px
+    }
+
+    .allstar20 {
+      background-position: 0 -66px
+    }
+
+    .allstar15 {
+      background-position: 0 -77px
+    }
+
+    .allstar10 {
+      background-position: 0 -88px
+    }
+
+    .allstar05 {
+      background-position: 0 -99px
+    }
+
+    .allstar00 {
+      background-position: 0 -110px
+    }
+
+    .rating5-t,
+    .starb~.stars5,
+    .collectors .stars5 {
+      background-position: 0 0px
+    }
+
+    .rating45-t {
+      background-position: 0 -11px
+    }
+
+    .rating4-t,
+    .starb~.stars4,
+    .collectors .stars4 {
+      background-position: 0 -22px
+    }
+
+    .rating35-t {
+      background-position: 0 -33px
+    }
+
+    .rating3-t,
+    .starb~.stars3,
+    .collectors .stars3 {
+      background-position: 0 -44px
+    }
+
+    .rating25-t {
+      background-position: 0 -55px
+    }
+
+    .rating2-t,
+    .starb~.stars2,
+    .collectors .stars2 {
+      background-position: 0 -66px
+    }
+
+    .rating15-t {
+      background-position: 0 -77px
+    }
+
+    .rating1-t,
+    .starb~.stars1,
+    .collectors .stars1 {
+      background-position: 0 -88px
+    }
+
+    .rating1-t,
+    .rating15-t,
+    .rating2-t,
+    .rating25-t,
+    .rating3-t,
+    .rating35-t,
+    .rating4-t,
+    .rating45-t,
+    .rating5-t,
+    .rating-t {
+      padding-left: 5px
+    }
+
+    #stars {
+      font-size: 0;
+      vertical-align: text-bottom;
+      cursor: pointer
+    }
+
+    #stars a img {
+      vertical-align: text-bottom
+    }
+
+    .starstop,
+    .stars {
+      margin-right: 5px
+    }
+
+    .starstop {
+      float: left
+    }
+
+    .rating_nums,
+    .rating_num {
+      color: #e09015;
+      font-size: 12px;
+      padding: 0 3px
+    }
+
+    .status-item .rating_num {
+      font-size: 14px
+    }
+
+    .rating_nums {
+      padding-left: 0
+    }
+
+    .star .rating_num {
+      color: #e09015;
+      padding: 0 5px 0 0
+    }
+
+    #interest_sect {
+      overflow: hidden;
+      word-wrap: break-word
+    }
+
+    #interest_sectl {
+      float: left;
+      width: 155px;
+      margin: 2px 0 0 0;
+      padding: 0 0 0 15px;
+      border-left: 1px solid #eaeaea;
+      color: #9b9b9b
+    }
+
+    #interest_sectl .rating_wrap {
+      padding-bottom: 15px;
+      font-size: 12px;
+      line-height: 14px
+    }
+
+    #interest_sectl .rating_wrap .rating_logo {
+      line-height: 1
+    }
+
+    #interest_sectl .rating_self {
+      padding: 0;
+      line-height: 2
+    }
+
+    #interest_sectl .rating_self:before,
+    #interest_sectl .rating_self:after {
+      content: '';
+      display: block;
+      clear: both
+    }
+
+    #interest_sectl .rating_self .rating_sum {
+      clear: both
+    }
+
+    #interest_sectl .rating_num {
+      color: #494949;
+      padding: 0;
+      min-width: 30%;
+      font-size: 28px
+    }
+
+    #interest_sectl .rating_right {
+      float: left;
+      padding: 10px 0 10px 6px
+    }
+
+    #interest_sectl .rating_right.not_showed {
+      padding: 10px 0
+    }
+
+    #interest_sectl .power {
+      height: 10px;
+      float: left;
+      margin: 1px 4px;
+      background: #ffd596 none repeat scroll 0 0
+    }
+
+    #interest_sectl .power.color_gray {
+      background: #ccc
+    }
+
+    #interest_sectl .rating_per {
+      font-size: 11px
+    }
+
+    #interest_sectl .rating_betterthan {
+      position: relative;
+      padding: 15px 0;
+      border-top: 1px solid #eaeaea;
+      color: #9b9b9b;
+      margin: 0
+    }
+
+    .rating_logo_wrap .content {
+      display: inline-block;
+      *display: inline;
+      zoom: 1;
+      vertical-align: top;
+      font-size: 12px;
+      line-height: 20px;
+      color: #9b9b9b;
+      margin-right: 4px
+    }
+
+    .rating_helper_wrap {
+      display: inline-block;
+      *display: inline;
+      zoom: 1;
+      vertical-align: top;
+      position: relative;
+      line-height: 18px
+    }
+
+    .rating_helper_wrap:hover .rating_helper_icon {
+      background-position: 0 -12px
+    }
+
+    .rating_helper_wrap:hover .rating_helper_content {
+      display: block
+    }
+
+    .rating_helper_icon {
+      background: url(https://img3.doubanio.com/f/movie/16305b59f6b69b8acde51c880de2a5b6cde0155a/pics/icon/ic_qmark.png) no-repeat;
+      background: -webkit-image-set(url(https://img3.doubanio.com/f/movie/16305b59f6b69b8acde51c880de2a5b6cde0155a/pics/icon/ic_qmark.png) 1x, url(https://img3.doubanio.com/f/movie/1fb4f85391f82c3286d7318d840577daae1c2eee/pics/icon/ic_qmark@2x.png) 2x) no-repeat;
+      display: inline-block;
+      *display: inline;
+      zoom: 1;
+      vertical-align: middle;
+      width: 12px;
+      height: 12px
+    }
+
+    .rating_helper_content {
+      z-index: 10;
+      color: #494949;
+      display: none;
+      position: absolute;
+      left: 12px;
+      bottom: 3px;
+      width: 96px;
+      background: #fef6e9;
+      border: 1px solid #e3d9ca;
+      padding: 8px 10px;
+      border-radius: 4px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1)
+    }
+
+    .rating_content_wrap {
+      width: 110%;
+      padding-bottom: 8px
+    }
+
+    .rating_content_wrap .rating_avg {
+      float: left;
+      font-size: 16px;
+      line-height: 28px;
+      color: #494949;
+      margin-right: 12px
+    }
+
+    .rating_content_wrap .friends {
+      float: left;
+      margin-right: 6px
+    }
+
+    .rating_content_wrap .avatar {
+      float: left;
+      margin-top: 6px;
+      margin-right: 2px;
+      line-height: 0;
+      border-radius: 50%;
+      overflow: hidden;
+      cursor: default
+    }
+
+    .rating_content_wrap .avatar img {
+      width: 16px
+    }
+
+    .rating_content_wrap .friends_count {
+      float: left;
+      line-height: 14px;
+      margin-top: 7px
+    }
+
+    #screening .subject-rate {
+      color: #e09015;
+      font-size: 12px;
+      margin-left: 2px
+    }
+
+    #screening .rating {
+      display: inline-block;
+      *display: inline;
+      zoom: 1;
+      margin: 4px auto 2px;
+      height: 19px
+    }
+
+    #screening .rating span {
+      float: left
+    }
+
+    #screening .rating .rating-star {
+      margin: 3px 3px 0 0;
+      width: 55px
+    }
+
+    span.subject-rate,
+    .rate,
+    .subject-rating {
+      color: #e09015
+    }
+
+    img.rating {
+      vertical-align: text-bottom
+    }
+
+    img.rating:nth-child(1) {
+      padding-left: 10px
+    }
+
+    .rec-list .score {
+      color: #e09015
+    }
+
+    .album-item .star {
+      line-height: 1;
+      margin-top: 6px
+    }
+
+    .album-item .star .allstar50,
+    .album-item .star .allstar45,
+    .album-item .star .allstar40,
+    .album-item .star .allstar35,
+    .album-item .star .allstar30,
+    .album-item .star .allstar25,
+    .album-item .star .allstar20,
+    .album-item .star .allstar15,
+    .album-item .star .allstar10,
+    .album-item .star .allstar05,
+    .album-item .star .allstar00 {
+      float: left
+    }
+
+    .album-item .star .score {
+      color: #e09015
+    }
+
+    .game-ratings strong {
+      margin: 0 6px;
+      color: #e09015
+    }
+
+    .link-subject .rate-more span {
+      font-size: 10px;
+      color: #e09015
+    }
+
+    .rating-controversy-reason {
+      background-color: #FFFBF4;
+      color: #494949;
+      line-height: 14px;
+      margin: 15px 0px 0px 0px;
+      padding: 6px 20px 6px 35px;
+      font-size: 11px;
+      position: relative
+    }
+
+    .rating-controversy-reason:before {
+      content: '';
+      display: block;
+      width: 14px;
+      height: 14px;
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      background-image: url("data:image/svg+xml, %3Csvg%20width%3D%2216%22%20height%3D%2216%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M8%200a8%208%200%20110%2016A8%208%200%20018%200zm0%2010.667a1%201%200%20100%202%201%201%200%20000-2zm0-8a1.207%201.207%200%2000-1.2%201.326l.467%204.677a.737.737%200%20001.466%200l.468-4.677A1.207%201.207%200%20008%202.667z%22%20fill%3D%22%23B2B2B2%22%20fill-rule%3D%22evenodd%22%2F%3E%3C%2Fsvg%3E");
+      background-size: contain
+    }
+
+    html,
+    body,
+    h1,
+    h2 {
+      padding: 0;
+      margin: 0
+    }
+
+    body {
+      font: 12px Helvetica, Arial, sans-serif
+    }
+
+    body h1 {
+      line-height: normal
+    }
+
+    body h2 {
+      line-height: normal
+    }
+
+    body #wrapper {
+      width: 770px;
+      height: 345px;
+      margin: 0
+    }
+
+    .ll {
+      float: left
+    }
+
+    .col-container .fix-col {
+      float: left
+    }
+
+    #wrapper #content {
+      background-repeat: no-repeat;
+      padding: 10px;
+      width: 750px;
+      height: 325px;
+      min-height: initial
+    }
+
+    #wrapper #content h1 {
+      font-size: 20px
+    }
+
+    #wrapper #content .grid {
+      width: 750px;
+      height: 325px;
+      border-radius: 9px
+    }
+
+    #wrapper #content .grid .grid-col1 {
+      width: 225px
+    }
+
+    #wrapper #content .grid .grid-col2 {
+      width: 254px;
+      padding: 24px 18px;
+      height: 277px;
+      overflow: hidden
+    }
+
+    #wrapper #content .grid .grid-col3 {
+      width: 18px
+    }
+
+    #wrapper #content .grid .grid-col4 {
+      font-size: 14px;
+      padding: 27px 14px 0 12px;
+      width: 190px
+    }
+
+    #wrapper #content .picture-wrapper {
+      width: 225px;
+      height: 325px;
+      border-top-left-radius: 9px;
+      border-bottom-left-radius: 9px;
+      background-size: cover;
+      background-position: center
+    }
+
+    #wrapper #content .main-title h1,
+    #wrapper #content .sub-title h2 {
+      overflow: hidden;
+      word-break: break-all;
+      max-height: 2.5em;
+      line-height: 1.2;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical
+    }
+
+    #wrapper #content .main-title h1 {
+      font-weight: 500;
+      font-size: 30px;
+      color: #000000;
+      -webkit-line-clamp: 1;
+    }
+
+    #wrapper #content .sub-title {
+      margin-top: 9px
+    }
+
+    #wrapper #content .sub-title h2 {
+      font-size: 18px;
+      color: #ADADAD;
+      font-weight: normal
+    }
+
+    #wrapper #content .baseinfo {
+      font-size: 16px;
+      color: #000000;
+      line-height: 25px;
+      margin-top: 18px;
+      letter-spacing: 1px;
+      word-break: break-all;
+      font-weight: 400;
+      display: -webkit-box;
+      overflow: hidden;
+      -webkit-line-clamp: 8;
+      -webkit-box-orient: vertical
+    }
+
+    #wrapper #content .line-wrap {
+      width: 18px;
+      height: 100%;
+      position: relative
+    }
+
+    #wrapper #content .line-wrap img {
+      width: 100%;
+      height: 100%
+    }
+
+    #wrapper #content .douban-icon {
+      font-size: 0
+    }
+
+    #wrapper #content .douban-icon>span {
+      font-size: 14px;
+      display: inline-block;
+      text-align: center;
+      border: 1px solid #41BE57
+    }
+
+    #wrapper #content .douban-icon .icon-pt1 {
+      background-color: #41BE57;
+      color: white;
+      border-top-left-radius: 4px;
+      border-bottom-left-radius: 4px;
+      width: 24px;
+      height: 24px;
+      line-height: 24px
+    }
+
+    #wrapper #content .douban-icon .icon-pt2 {
+      color: #3BA94D;
+      background: #FFFFFF;
+      border-top-right-radius: 4px;
+      border-bottom-right-radius: 4px;
+      width: 69px;
+      height: 24px;
+      line-height: 24px
+    }
+
+    #wrapper #content .score-container .rating_self {
+      margin-top: 15px;
+      display: flex;
+    }
+
+    #wrapper #content .score-container .rating_self .rating_num {
+      font-size: 48px;
+      line-height: 1;
+      padding: 0;
+      color: black;
+      font-weight: normal
+    }
+
+    #wrapper #content .score-container .rating_self .rating_right {
+      float: left;
+      padding-left: 10px;
+      padding-top: 5px
+    }
+
+    #wrapper #content .score-container .rating_self .rating_right .ll {
+      float: none
+    }
+
+    #wrapper #content .score-container .rating_self .rating_right .rating_sum {
+      color: #3B3B3B
+    }
+
+    #wrapper #content .score-container .rating_self .rating_right .rating_sum .rating_people,
+    #wrapper #content .score-container .rating_self .rating_right .rating_sum .rating_people:hover,
+    #wrapper #content .score-container .rating_self .rating_right .rating_sum .rating_people:visited,
+    #wrapper #content .score-container .rating_self .rating_right .rating_sum .rating_people:link {
+      color: #3B3B3B;
+      background: none
+    }
+
+    #wrapper #content .score-container .ratings-on-weight {
+      margin-top: 10px;
+      min-weight: 1px
+    }
+
+    #wrapper #content .score-container .ratings-on-weight .item {
+      line-height: 1.5
+    }
+
+    #wrapper #content .score-container .ratings-on-weight .item .starstop {
+      float: none;
+      margin-right: 0;
+      color: #3B3B3B
+    }
+
+    #wrapper #content .score-container .ratings-on-weight .item>span,
+    #wrapper #content .score-container .ratings-on-weight .item>div {
+      display: inline-block
+    }
+
+    #wrapper #content .score-container .ratings-on-weight .item .power {
+      height: 6px;
+      background: #FAA032;
+      border-radius: 3px;
+      vertical-align: middle
+    }
+
+    #wrapper #content .bottom-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between
+    }
+
+    #wrapper #content .bottom-row .rating-betterthan {
+      font-size: 14px;
+      color: #1C1C1C;
+      line-height: 21px;
+      width: 117px
+    }
+
+    #wrapper #content .bottom-row .rating-betterthan .number {
+      font-size: 14px;
+      color: #41BE57
+    }
+
+    #wrapper #content .bottom-row .qr-code {
+      width: 64px;
+      height: 64px;
+      overflow: hidden
+    }
+
+    #wrapper #content .bottom-row .qr-code img {
+      width: 100%;
+      height: 100%
+    }
+  </style>
+  <style>
+    #wrapper #content {
+      background-image: url('data:image/png;base64,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');
+    }
+
+    #wrapper #content .rating_self .bigstar {
+      background-image: url(https://img3.doubanio.com/dae/staticng/s/movie/16890517cac492e9c3605fdaa39d60f8898e4340/share/movie/pics/output_card/ic_rating_m.png);
+      background-image: -webkit-image-set(url(https://img3.doubanio.com/dae/staticng/s/movie/16890517cac492e9c3605fdaa39d60f8898e4340/share/movie/pics/output_card/ic_rating_m.png) 1x, url(https://img3.doubanio.com/dae/staticng/s/movie/16890517cac492e9c3605fdaa39d60f8898e4340/share/movie/pics/output_card/ic_rating_m@2x.png) 2x);
+      background-repeat: no-repeat;
+    }
+  </style>
+  <title>{{data.title}}</title>
+</head>
+
+<body>
+  <div id="wrapper">
+    <div id="content">
+      <div class="grid col-container clearfix">
+        <div class="fix-col grid-col1">
+          <div class="picture-wrapper" style="background-image: url({{data.cover_url}})">
+          </div>
+        </div>
+        <div class="fix-col grid-col2">
+
+          <div class="main-title">
+            <h1>{{data.title}}</h1>
+          </div>
+          <div class="baseinfo">
+            {{each info.base}}
+              <span>{{$value}}</span>
+            {{/each}}
+          </div>
+        </div>
+        <div class="fix-col grid-col3">
+          <div class="line-wrap">
+            <img
+              src="https://img3.doubanio.com/dae/staticng/s/movie/16890517cac492e9c3605fdaa39d60f8898e4340/share/movie/pics/output_card/line.png" />
+          </div>
+        </div>
+        <div class="fix-col grid-col4">
+          <div class="douban-icon">
+            <span class="icon-pt1">豆</span>
+            <span class="icon-pt2">豆瓣评分</span>
+          </div>
+
+          <div class="score-container">
+            <div class="rating_self clearfix" typeof="v:Rating">
+    <strong class="rating_num" property="v:average">7.5</strong>
+    <span property="v:best" content="10.0"></span>
+    <div class="rating_right">
+        <div class="bigstar bigstar40"></div>
+        <div class="rating_sum">
+                <a href="comments" class="rating_people">
+                    <span property="v:votes">{{data.rating.count}}</span>人评价
+                </a>
+        </div>
+    </div>
+</div>
+<div class="ratings-on-weight">
+    
+        <div class="item">
+        
+        <span class="stars5 starstop" title="力荐">
+            5星
+        </span>
+        <div class="power" style="width:46px"></div>
+        <span class="rating_per">{{info.rating[0]}}%</span>
+        <br />
+        </div>
+        <div class="item">
+        
+        <span class="stars4 starstop" title="推荐">
+            4星
+        </span>
+        <div class="power" style="width:92px"></div>
+        <span class="rating_per">{{info.rating[1]}}%</span>
+        <br />
+        </div>
+        <div class="item">
+        
+        <span class="stars3 starstop" title="还行">
+            3星
+        </span>
+        <div class="power" style="width:67px"></div>
+        <span class="rating_per">{{info.rating[2]}}%</span>
+        <br />
+        </div>
+        <div class="item">
+        
+        <span class="stars2 starstop" title="较差">
+            2星
+        </span>
+        <div class="power" style="width:12px"></div>
+        <span class="rating_per">{{info.rating[3]}}%</span>
+        <br />
+        </div>
+        <div class="item">
+        
+        <span class="stars1 starstop" title="很差">
+            1星
+        </span>
+        <div class="power" style="width:1px"></div>
+        <span class="rating_per">{{info.rating[4]}}%</span>
+        <br />
+        </div>
+</div>
+
+            <div class="bottom-row col-container">
+              <div class="rating-betterthan"></div>
+              <div class="qr-code" data-text="https://m.douban.com/movie/subject/{{data.id}}/?refer=reference-card">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+  </script>
+  <script
+    src="https://img3.doubanio.com/f/movie/a6eedf84389e1bc9f757bc2d19538f8c8d1cae9d/js/movie/lib/jquery.current.min.js"></script>
+  <script
+    src="https://img3.doubanio.com/f/movie/c4ab132ff4d3d64a83854c875ea79b8b541faf12/js/movie/lib/qrcode.min.js"></script>
+
+   <script src="https://img3.doubanio.com/f/movie/86d5ad0dda4097714606a238be204f17e1597141/js/movie/output-card.js"></script></body>
+
+</html>

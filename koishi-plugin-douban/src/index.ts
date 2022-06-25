@@ -1,21 +1,18 @@
-import { Context, template, isInteger, segment } from 'koishi'
+import { Context, template, isInteger, segment} from 'koishi'
 
-import atemplate from 'art-template'
-
-import { parseRenderData } from './douban'
 const decrypt = require('./decrypt.js')
-
 
 export const name = 'douban'
 
 export const using = ['puppeteer'] as const
-
+ 
 
 
 const URL_BASE = (path: string) => `https://search.douban.com/${path}/subject_search?search_text=`
 const URL_SEARCH_BOOK = URL_BASE('book')
 const URL_SEARCH_MUSIC = URL_BASE('music')
 const URL_SEARCH_MOVIE = URL_BASE('movie')
+const URL_MOVIE_CARD = (id: number) => `https://movie.douban.com/subject/${id}/output_card`
 
 type SearchItem = {
   id: number,
@@ -54,7 +51,6 @@ export function apply(ctx: Context) {
     const result = decrypt(r);
     return result.payload.items;
   }
-
   ctx.command('douban <keyword>', '使用豆瓣搜索，默认搜索电影')
     .example('豆瓣 你的名字')
     .example('豆瓣书籍 朝花夕拾')
@@ -75,7 +71,6 @@ export function apply(ctx: Context) {
       } else {
         url = URL_SEARCH_MOVIE + url  // 默认搜索电影
       }
-      // 获取搜索的内容数据
       const data = await grabDataFromHtml(url)
       let index = 0
       if (data.length > 1) {
@@ -84,35 +79,20 @@ export function apply(ctx: Context) {
           output.push(`${i + 1}. ${data[i].title}\n  ${data[i].abstract}`)
         }
         await session.send(output.join('\n'))
-        // 等待用户选择
         const answer = await session.prompt(30 * 1000)
 
         if (!answer) return
         index = +answer - 1
-        // 输入非法内容
         if (!isInteger(index) || index < 0 || index >= 3) {
           return template('douban.incorrect-index')
         }
       }
-      let info = {}, html:string;
       if (options.film) {
-        const movie = await ctx.http.get<string>(`https://movie.douban.com/subject/` + data[index].id, { headers })
-        info = parseRenderData(movie)
-        html = atemplate(__dirname + '/assets/film.art', {
-          info,
-          data: data[index]
-        });
-      } else if (options.book) {
-        // const book = await ctx.http.get(`https://book.douban.com/subject/` + data[index].id, { headers })
-        // console.log(book)
-
-      } else {
-
+        // @ts-ignore
+        const page = await ctx.puppeteer.page();
+        await page.goto(URL_MOVIE_CARD(data[index].id));
+        const pic = await page.screenshot({ clip: { x: 10, y: 10, height: 325, width: 750 } })
+        return segment.image(pic)
       }
-      const page = await ctx.puppeteer.page();
-      await page.setContent(html)
-      await page.content();
-      const pic = await page.screenshot({ clip: { x: 10, y: 10, height: 325, width: 750 } })
-      return segment.image(pic)
     })
 }

@@ -27,9 +27,5 @@
   "homepage": "https://github.com/Mahoo12138/koishi-plugin-douban",
   "peerDependencies": {
     "koishi": "^4.6.0"
-  },
-  "dependencies": {
-    "art-template": "^4.13.2",
-    "cheerio": "^1.0.0-rc.11"
   }
 }
