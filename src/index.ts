@@ -21,6 +21,7 @@ type SearchItem = {
   id: number,
   url: string,
   title: string,
+  rating: {[key:string]:string|number}
   abstract: string
 }
 
@@ -47,12 +48,13 @@ template.set('douban', {
 })
 
 export function apply(ctx: Context) {
-  const grabDataFromHtml = async (url: string): Promise<SearchItem[]> => {
+  const parseDataFromHtml = async (url: string): Promise<SearchItem[]> => {
     if (!url) return null
-    const data = await ctx.http.get(url, { headers })
-    const r = /window\.__DATA__ = "(.*?)";/.exec(data)[1];
+    const html = await ctx.http.get(url, { headers })
+    const r = /window\.__DATA__ = "(.*?)";/.exec(html)[1];
     const result = decrypt(r);
-    return result.payload.items;
+    const data:SearchItem[] =  result.payload.items;
+    return data.filter(item => !!item.rating)
   }
 
   ctx.command('douban <keyword>', '使用豆瓣搜索，默认搜索电影')
@@ -76,7 +78,8 @@ export function apply(ctx: Context) {
         url = URL_SEARCH_MOVIE + url  // 默认搜索电影
       }
       // 获取搜索的内容数据
-      const data = await grabDataFromHtml(url)
+      const data = await parseDataFromHtml(url)
+      console.log(data)
       let index = 0
       if (data.length > 1) {
         const output = [template('douban.has-multi-result', keyword, 3)]
@@ -94,6 +97,7 @@ export function apply(ctx: Context) {
           return template('douban.incorrect-index')
         }
       }
+      
       let info = {}, html:string;
       if (options.film) {
         const movie = await ctx.http.get<string>(`https://movie.douban.com/subject/` + data[index].id, { headers })
