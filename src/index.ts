@@ -2,42 +2,23 @@ import { Context, template, isInteger, segment } from 'koishi'
 
 import atemplate from 'art-template'
 
-import { parseRenderData } from './douban'
-const decrypt = require('./decrypt.js')
+import {
+  headers,
+  parseRenderData,
+  SearchItem,
+  URL_CONTENT_BOOK,
+  URL_CONTENT_MOVIE,
+  URL_CONTENT_MUSIC,
+  URL_SEARCH_BOOK,
+  URL_SEARCH_MOVIE, 
+  URL_SEARCH_MUSIC
+} from './douban'
 
+const decrypt = require('./decrypt.js')
 
 export const name = 'douban'
 
 export const using = ['puppeteer'] as const
-
-
-
-const URL_BASE = (path: string) => `https://search.douban.com/${path}/subject_search?search_text=`
-const URL_SEARCH_BOOK = URL_BASE('book')
-const URL_SEARCH_MUSIC = URL_BASE('music')
-const URL_SEARCH_MOVIE = URL_BASE('movie')
-
-type SearchItem = {
-  id: number,
-  url: string,
-  title: string,
-  rating: {[key:string]:string|number}
-  abstract: string
-}
-
-const headers = {
-  "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
-  "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6",
-  "Connection": "keep-alive",
-  "sec-ch-ua": "\"Chromium\";v=\"94\", \"Microsoft Edge\";v=\"94\", \";Not A Brand\";v=\"99\"",
-  "sec-ch-ua-mobile": "?0",
-  "Sec-Fetch-Dest": "document",
-  "Sec-Fetch-Mode": "navigate",
-  "Sec-Fetch-Site": "none",
-  "Sec-Fetch-User": "?1",
-  "Upgrade-Insecure-Requests": "1",
-  "User-Agent": 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.81 Safari/537.36 Edg/94.0.992.50',
-};
 
 template.set('douban', {
   'resource-not-exist': '豆瓣站内暂无 “{0}” 相关资源。',
@@ -53,12 +34,14 @@ export function apply(ctx: Context) {
     const html = await ctx.http.get(url, { headers })
     const r = /window\.__DATA__ = "(.*?)";/.exec(html)[1];
     const result = decrypt(r);
-    const data:SearchItem[] =  result.payload.items;
+    const data: SearchItem[] = result.payload.items;
     return data.filter(item => !!item.rating)
   }
 
   ctx.command('douban <keyword>', '使用豆瓣搜索，默认搜索电影')
+    .example('douban 言叶之庭')
     .example('豆瓣 你的名字')
+    .example('douban -m 叶惠美')
     .example('豆瓣书籍 朝花夕拾')
     .option('book', '-b')    // 搜索书籍
     .option('film', '-f')    // 搜索电影
@@ -79,7 +62,6 @@ export function apply(ctx: Context) {
       }
       // 获取搜索的内容数据
       const data = await parseDataFromHtml(url)
-      console.log(data)
       let index = 0
       if (data.length > 1) {
         const output = [template('douban.has-multi-result', keyword, 3)]
@@ -97,22 +79,23 @@ export function apply(ctx: Context) {
           return template('douban.incorrect-index')
         }
       }
-      
-      let info = {}, html:string;
+
+     
       if (options.film) {
-        const movie = await ctx.http.get<string>(`https://movie.douban.com/subject/` + data[index].id, { headers })
-        info = parseRenderData(movie)
-        html = atemplate(__dirname + '/assets/film.art', {
-          info,
-          data: data[index]
-        });
+        url = URL_CONTENT_MOVIE
       } else if (options.book) {
-        // const book = await ctx.http.get(`https://book.douban.com/subject/` + data[index].id, { headers })
-        // console.log(book)
-
+        url = URL_CONTENT_BOOK
       } else {
-
+        url = URL_CONTENT_MUSIC
       }
+      // 获取详细数据
+      const item = await ctx.http.get<string>(url + data[index].id, { headers })
+      const info = parseRenderData(item)
+      // 填充模板
+      const html = atemplate(__dirname + '/assets/template.art', {
+        info,
+        data: data[index]
+      });
       const page = await ctx.puppeteer.page();
       await page.setContent(html)
       await page.content();

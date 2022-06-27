@@ -879,7 +879,7 @@
 
           <div class="score-container">
             <div class="rating_self clearfix" typeof="v:Rating">
-    <strong class="rating_num" property="v:average">7.5</strong>
+    <strong class="rating_num" property="v:average">{{data.rating.value}}</strong>
     <span property="v:best" content="10.0"></span>
     <div class="rating_right">
         <div class="bigstar bigstar40"></div>
