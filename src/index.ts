@@ -1,5 +1,5 @@
 import { Context, template, isInteger, segment } from 'koishi'
-
+import {} from '@koishijs/plugin-puppeteer'
 import atemplate from 'art-template'
 
 import {
@@ -81,12 +81,12 @@ export function apply(ctx: Context) {
       }
 
      
-      if (options.film) {
-        url = URL_CONTENT_MOVIE
+      if (options.music) {
+        url = URL_CONTENT_MUSIC
       } else if (options.book) {
         url = URL_CONTENT_BOOK
       } else {
-        url = URL_CONTENT_MUSIC
+        url = URL_CONTENT_MOVIE
       }
       // 获取详细数据
       const item = await ctx.http.get<string>(url + data[index].id, { headers })
