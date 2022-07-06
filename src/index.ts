@@ -1,4 +1,4 @@
-import { Context, template, isInteger, segment } from 'koishi'
+import { Context, template, isInteger, segment, Schema } from 'koishi'
 import {} from '@koishijs/plugin-puppeteer'
 import atemplate from 'art-template'
 
@@ -28,7 +28,15 @@ template.set('douban', {
   'incorrect-index': '输入选项有误。',
 })
 
-export function apply(ctx: Context) {
+interface TemplateOptions {
+  simpleTemplate?: boolean
+}
+
+export const Config = Schema.object({
+  simple: Schema.boolean().default(true).description('是否简约模板'),
+})
+
+export function apply(ctx: Context, config: TemplateOptions) {
   const parseDataFromHtml = async (url: string): Promise<SearchItem[]> => {
     if (!url) return null
     const html = await ctx.http.get(url, { headers })
@@ -38,7 +46,9 @@ export function apply(ctx: Context) {
     return data.filter(item => !!item.rating)
   }
 
-  ctx.command('douban <keyword>', '使用豆瓣搜索，默认搜索电影')
+
+
+  ctx.command('douban <keyword>', '使用豆瓣搜索')
     .example('douban 言叶之庭')
     .example('豆瓣 你的名字')
     .example('douban -m 叶惠美')
@@ -91,15 +101,21 @@ export function apply(ctx: Context) {
       // 获取详细数据
       const item = await ctx.http.get<string>(url + data[index].id, { headers })
       const info = parseRenderData(item)
+      
+      let templateCate = '/assets/original.art', size = [750, 325]
+      if(config.simpleTemplate){
+        templateCate = '/assets/simple.art',size = [320, 480]
+      }
       // 填充模板
-      const html = atemplate(__dirname + '/assets/template.art', {
+      const html = atemplate(__dirname + templateCate, {
         info,
         data: data[index]
       });
       const page = await ctx.puppeteer.page();
       await page.setContent(html)
       await page.content();
-      const pic = await page.screenshot({ clip: { x: 10, y: 10, height: 325, width: 750 } })
+      const pic = await page.screenshot({ clip: { x: 8, y: 8, height: size[1], width: size[0] } })
+
       return segment.image(pic)
     })
 }

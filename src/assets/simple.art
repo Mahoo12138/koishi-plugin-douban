@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{title}}</title>
+  <style>
+    .card {
+      content: "";
+      position: absolute;
+      bottom: 0px;
+      width: 320px;
+      height: 140px;
+      z-index: 1;
+      border-radius: 9px;
+      overflow: hidden;
+    }
+
+    .mark {
+      width: 100%;
+      height: 100%;
+      background-image: url({{data.cover_url}});
+      background-position: center;
+      filter: blur(10px) brightness(0.9);
+      transform: scale(2.5);
+    }
+
+    .intro {
+      width: 210px;
+      position: absolute;
+      left: 12px;
+      bottom: 10px;
+      z-index: 2;
+      color: #fff;
+    }
+    .intro > .title {
+      padding: 0;
+      margin: 0;
+      font-weight: 500;
+      font-size: 30px;
+      overflow: hidden;
+      word-break: break-all;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical
+    }
+
+    .douban {
+      z-index: 2;
+      position: absolute;
+      text-align: right;
+      bottom: 24px;
+      right: 12px;
+    }
+
+    .douban > div > div > img{
+      display: inline!important;
+      margin-bottom: 5px;
+    }
+
+    .container {
+      position: relative;
+      width: 320px;
+      height: 480px;
+      border-radius: 10px;
+      background-image: url({{data.cover_url}});
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+      overflow: hidden;
+    }
+
+    .douban-icon {
+      font-size: 0
+    }
+
+    .douban-icon>span {
+      font-size: 14px;
+      display: inline-block;
+      text-align: center;
+      border: 1px solid #41BE57
+    }
+
+    .douban-icon .icon-pt1 {
+      background-color: #41BE57;
+      color: white;
+      border-top-left-radius: 4px;
+      border-bottom-left-radius: 4px;
+      width: 24px;
+      height: 24px;
+      line-height: 24px
+    }
+
+    .douban-icon .icon-pt2 {
+      color: #3BA94D;
+      background: #FFFFFF;
+      border-top-right-radius: 4px;
+      border-bottom-right-radius: 4px;
+      width: 69px;
+      height: 24px;
+      line-height: 24px
+    }
+
+    .score-container {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
+
+    .rating_num {
+      font-size: 48px;
+      line-height: 1.5;
+      margin-right: 8px;
+      padding: 0;
+      font-weight: normal
+    }
+
+    .rating_people {
+      font-size: 14px;
+    }
+
+    .bigstar50,
+    .bigstar45,
+    .bigstar40,
+    .bigstar35,
+    .bigstar30,
+    .bigstar25,
+    .bigstar20,
+    .bigstar15,
+    .bigstar10,
+    .bigstar05,
+    .bigstar00 {
+      display: inline-block;
+      zoom: 1;
+      background: url(https://img3.doubanio.com/f/movie/680a4bc4c384199245b080c7104da5be8ed717d3/pics/rating_icons/ic_rating_m.png) no-repeat;
+      background: -webkit-image-set(url(https://img3.doubanio.com/f/movie/680a4bc4c384199245b080c7104da5be8ed717d3/pics/rating_icons/ic_rating_m.png) 1x, url(https://img3.doubanio.com/f/movie/ee7f53d76c3f8ed4991bdbafdb9b2c90c0aedfef/pics/rating_icons/ic_rating_m@2x.png) 2x) no-repeat;
+      width: 75px;
+      height: 15px;
+      margin: 1px 0 0 0;
+      overflow: hidden
+    }
+
+    .bigstar50 {
+      background-position: 0 0px
+    }
+
+    .bigstar45 {
+      background-position: 0 -15px
+    }
+
+    .bigstar40 {
+      background-position: 0 -30px
+    }
+
+    .bigstar35 {
+      background-position: 0 -45px
+    }
+
+    .bigstar30 {
+      background-position: 0 -60px
+    }
+
+    .bigstar25 {
+      background-position: 0 -75px
+    }
+
+    .bigstar20 {
+      background-position: 0 -90px
+    }
+
+    .bigstar15 {
+      background-position: 0 -105px
+    }
+
+    .bigstar10 {
+      background-position: 0 -120px
+    }
+
+    .bigstar05 {
+      background-position: 0 -135px
+    }
+
+    .bigstar00 {
+      background-position: 0 -150px
+    }
+  </style>
+
+
+
+</head>
+
+<body>
+  <div class="container">
+    <div class="card">
+      <div class="mark"></div>
+    </div>
+    <div class="intro">
+      <h1 class="title">{{data.title}}</h1>
+      <div class="score-container">
+        <div class="rating_num">{{data.rating.value}}</div>
+
+        <div class="rating_right">
+          <div class="bigstar bigstar40">
+          </div>
+          <div class="rating_people">
+            <span>{{data.rating.count}}</span>人评价
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="douban">
+      <div class="douban-icon">
+        <div class="qr-code" data-text="https://m.douban.com/movie/subject/35460167/?refer=reference-card"
+          title="https://m.douban.com/movie/subject/35460157/?refer=reference-card">
+        </div>
+        <span class="icon-pt1">豆</span>
+        <span class="icon-pt2">豆瓣评分</span>
+      </div>
+    </div>
+    <script
+      src="https://img3.doubanio.com/f/movie/a6eedf84389e1bc9f757bc2d19538f8c8d1cae9d/js/movie/lib/jquery.current.min.js"></script>
+    <script
+      src="https://img3.doubanio.com/f/movie/c4ab132ff4d3d64a83854c875ea79b8b541faf12/js/movie/lib/qrcode.min.js"></script>
+    <script
+      src="https://img3.doubanio.com/f/movie/86d5ad0dda4097714606a238be204f17e1597141/js/movie/output-card.js"></script>
+
+</body>
+
+</html>
