@@ -1,0 +1,6 @@
+douban:
+  resource-not-exist: 豆瓣站内暂无 “{0}” 相关资源。
+  await-choose-result: 请发送您想查看的资源编号。
+  error-with-link: 豆瓣搜索时出现问题。
+  has-multi-result: “{0}”有多个搜索结果（显示前 {1} 个）：
+  incorrect-index: 输入选项有误。

@@ -1,4 +1,4 @@
-import { Context, template, isInteger, segment, Schema } from 'koishi'
+import { Context, isInteger, segment, Schema } from 'koishi'
 import {} from '@koishijs/plugin-puppeteer'
 import atemplate from 'art-template'
 
@@ -20,13 +20,6 @@ export const name = 'douban'
 
 export const using = ['puppeteer'] as const
 
-template.set('douban', {
-  'resource-not-exist': '豆瓣站内暂无 “{0}” 相关资源。',
-  'await-choose-result': '请发送您想查看的资源编号。',
-  'error-with-link': '豆瓣搜索时出现问题。',
-  'has-multi-result': '“{0}”有多个搜索结果（显示前 {1} 个）：',
-  'incorrect-index': '输入选项有误。',
-})
 
 interface TemplateOptions {
   simpleTemplate?: boolean
@@ -46,7 +39,7 @@ export function apply(ctx: Context, config: TemplateOptions) {
     return data.filter(item => !!item.rating)
   }
 
-
+  ctx.i18n.define('zh', require('./locales/zh'))
 
   ctx.command('douban <keyword>', '使用豆瓣搜索')
     .example('douban 言叶之庭')
@@ -74,7 +67,7 @@ export function apply(ctx: Context, config: TemplateOptions) {
       const data = await parseDataFromHtml(url)
       let index = 0
       if (data.length > 1) {
-        const output = [template('douban.has-multi-result', keyword, 3)]
+        const output = [session.text('douban.has-multi-result', [keyword, 3])]
         for (let i = 0; i < 3; i++) {
           output.push(`${i + 1}. ${data[i].title}\n  ${data[i].abstract}`)
         }
@@ -86,11 +79,9 @@ export function apply(ctx: Context, config: TemplateOptions) {
         index = +answer - 1
         // 输入非法内容
         if (!isInteger(index) || index < 0 || index >= 3) {
-          return template('douban.incorrect-index')
+          return session.text('douban.incorrect-index')
         }
       }
-
-     
       if (options.music) {
         url = URL_CONTENT_MUSIC
       } else if (options.book) {
