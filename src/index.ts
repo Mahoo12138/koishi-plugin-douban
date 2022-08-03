@@ -26,7 +26,7 @@ interface TemplateOptions {
 }
 
 export const Config = Schema.object({
-  simple: Schema.boolean().default(true).description('是否简约模板'),
+  simpleTemplate: Schema.boolean().default(true).description('是否简约模板'),
 })
 
 export function apply(ctx: Context, config: TemplateOptions) {
@@ -81,7 +81,10 @@ export function apply(ctx: Context, config: TemplateOptions) {
         if (!isInteger(index) || index < 0 || index >= 3) {
           return session.text('douban.incorrect-index')
         }
+      } else {
+        return session.text('douban.resource-not-exist', [keyword])
       }
+
       if (options.music) {
         url = URL_CONTENT_MUSIC
       } else if (options.book) {
