@@ -1,5 +1,5 @@
 import { Context, isInteger, segment, Schema } from 'koishi'
-import {} from '@koishijs/plugin-puppeteer'
+import { } from '@koishijs/plugin-puppeteer'
 import atemplate from 'art-template'
 
 import {
@@ -10,7 +10,7 @@ import {
   URL_CONTENT_MOVIE,
   URL_CONTENT_MUSIC,
   URL_SEARCH_BOOK,
-  URL_SEARCH_MOVIE, 
+  URL_SEARCH_MOVIE,
   URL_SEARCH_MUSIC
 } from './douban'
 
@@ -22,10 +22,12 @@ export const using = ['puppeteer'] as const
 
 
 interface TemplateOptions {
+  searchItemCount: number
   simpleTemplate?: boolean
 }
 
 export const Config = Schema.object({
+  searchItemCount: Schema.number().default(3).max(5).min(2).description("展示的搜索结果数量"),
   simpleTemplate: Schema.boolean().default(true).description('是否简约模板'),
 })
 
@@ -67,7 +69,7 @@ export function apply(ctx: Context, config: TemplateOptions) {
       const data = await parseDataFromHtml(url)
       let index = 0
       if (data.length > 1) {
-        const output = [session.text('douban.has-multi-result', [keyword, 3])]
+        const output = [session.text('douban.has-multi-result', [keyword, config.count])]
         for (let i = 0; i < 3; i++) {
           output.push(`${i + 1}. ${data[i].title}\n  ${data[i].abstract}`)
         }
@@ -95,10 +97,10 @@ export function apply(ctx: Context, config: TemplateOptions) {
       // 获取详细数据
       const item = await ctx.http.get<string>(url + data[index].id, { headers })
       const info = parseRenderData(item)
-      
+
       let templateCate = '/assets/original.art', size = [750, 325]
-      if(config.simpleTemplate){
-        templateCate = '/assets/simple.art',size = [320, 480]
+      if (config.simpleTemplate) {
+        templateCate = '/assets/simple.art', size = [320, 480]
       }
       // 填充模板
       const html = atemplate(__dirname + templateCate, {
