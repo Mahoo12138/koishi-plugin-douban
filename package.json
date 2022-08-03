@@ -1,7 +1,7 @@
 {
   "name": "koishi-plugin-douban",
   "description": "A koishi plugin crawling data from Web Douban",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
   "files": [
@@ -26,11 +26,25 @@
   },
   "homepage": "https://github.com/Mahoo12138/koishi-plugin-douban",
   "peerDependencies": {
-    "koishi": "^4.6.0"
+    "koishi": "^4.8.2",
+    "@koishijs/plugin-puppeteer": "^3.0.7"
   },
   "dependencies": {
     "art-template": "^4.13.2",
-    "cheerio": "^1.0.0-rc.11",
-    "@koishijs/plugin-puppeteer": "^3.0.6"
+    "cheerio": "^1.0.0-rc.11"
+  },
+  "koishi": {
+    "description": {
+      "en": "Search for resources on Douban",
+      "zh": "在豆瓣搜索资源"
+    },
+    "service": {
+      "required": [
+        "puppeteer"
+      ]
+    },
+    "locales": [
+      "zh"
+    ]
   }
 }
