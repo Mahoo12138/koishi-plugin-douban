@@ -1,7 +1,7 @@
 {
   "name": "koishi-plugin-douban",
   "description": "A koishi plugin crawling data from Web Douban",
-  "version": "0.2.0",
+  "version": "0.2.3",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
   "files": [
@@ -36,7 +36,8 @@
   "koishi": {
     "description": {
       "en": "Search for resources on Douban",
-      "zh": "在豆瓣搜索资源"
+      "zh": "在豆瓣搜索资源",
+      "jp": "Douban でリソースを検索します"
     },
     "service": {
       "required": [
