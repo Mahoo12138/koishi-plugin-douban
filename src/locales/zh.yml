@@ -4,3 +4,4 @@ douban:
   error-with-link: 豆瓣搜索时出现问题。
   has-multi-result: “{0}”有多个搜索结果（显示前 {1} 个）：
   incorrect-index: 输入选项有误。
+  incorrect-input-too-much: 次数过多，会话已结束。
